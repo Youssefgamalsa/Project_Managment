@@ -8,6 +8,6 @@ const baseUsers = `${baseurl}/Users` ;
     resetrequest:`${baseUsers}/Reset/Request`,
     reset:`${baseUsers}/Reset`,
     verify:`${baseUsers}/verify`,
-    changepass:`${baseUsers}/ChangePass`,
+    changepass:`${baseUsers}/ChangePassword`,
 }
 export default baseUsersAuth;

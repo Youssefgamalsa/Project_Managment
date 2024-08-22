@@ -18,7 +18,7 @@ export default function Verify() {
        baseUsersAuth.verify,
         data
       );
-      toast.success("Verified Account Successfully");
+      toast.success(response.data.message);
       console.log(response);
       navigate("/login");
     } catch (error) {
