@@ -28,11 +28,9 @@ export default function Register() {
   let submtion = async (data) => {
     let form_data = append_to_form_data(data);
     try {
-      let response = await axios.post(
-        baseUsersAuth.register,
-        form_data
-      );
+      let response = await axios.post(baseUsersAuth.register, form_data);
       toast.success(response.data.message);
+      localStorage.setItem("token", response.data.token);
       navigate("/verify");
       console.log(response);
     } catch (error) {

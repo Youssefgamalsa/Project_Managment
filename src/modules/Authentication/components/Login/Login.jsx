@@ -1,14 +1,20 @@
 import { useForm } from "react-hook-form";
-// import logo from "../../../../assets/2.png";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useState } from "react";
+import {  useState } from "react";
 import "../../../../App.css";
 import baseUsersAuth from "../../../BaseUrls/BaseUrls";
 export default function Login() {
   let navigate = useNavigate();
   const [isPasswordVisibile, setIsPasswordVisibile] = useState(true);
+
+  // useEffect(() => {
+  //   if (localStorage.getItem("token")) {
+  //     navigate("/dashboard");
+  //   }
+  // });
+
   let {
     register,
     handleSubmit,
@@ -16,14 +22,11 @@ export default function Login() {
   } = useForm();
   let submtion = async (data) => {
     try {
-      let response = await axios.post(
-        baseUsersAuth.login,
-        data
-      );
+      let response = await axios.post(baseUsersAuth.login, data);
       toast.success("Login successfully");
       console.log(response);
       localStorage.setItem("token", response.data.token);
-      navigate('/dashboard');
+      navigate("/dashboard");
     } catch (error) {
       toast.error(error.response.data.message);
     }
@@ -81,7 +84,7 @@ export default function Login() {
           <Link to="/register" className="white">
             Register Now ?
           </Link>
-          <Link to="/reset-request" className="white">
+          <Link to="/forgetpass" className="white">
             Forget password ?
           </Link>
         </div>
