@@ -17,13 +17,16 @@ import ProjectData from "./modules/Projects/components/ProjectData/ProjectData";
 import TasksList from "./modules/Tasks/components/TasksList/TasksList";
 import UsersLists from "./modules/Users/components/UsersList/UsersLists";
 import TaskData from "./modules/Tasks/components/TaskData/TaskData";
-import imgurl from './assets/images/bg1.png'
+import imgurl1 from './assets/images/bg1.png'
+import imgurl2 from './assets/images/bg2.png'
+import imgurl3 from './assets/images/bg3.png'
 import AuthLayout from "./modules/Shared/components/AuthmoLayout/AuthLayout";
 function App() {
+  const path = window.location.pathname ;
   const routes = createBrowserRouter([
     {
       path: "",
-      element: <AuthLayout imgurl={imgurl}/>,
+      element: <AuthLayout imgurl={path == '/login' ? imgurl1 :  imgurl2 }/>,
       errorElement: <NotFound />,
       children: [
         { index: true, element: <Login /> },
