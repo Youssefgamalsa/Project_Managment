@@ -17,20 +17,23 @@ import ProjectData from "./modules/Projects/components/ProjectData/ProjectData";
 import TasksList from "./modules/Tasks/components/TasksList/TasksList";
 import UsersLists from "./modules/Users/components/UsersList/UsersLists";
 import TaskData from "./modules/Tasks/components/TaskData/TaskData";
-import imgurl1 from './assets/images/bg1.png'
-import imgurl2 from './assets/images/bg2.png'
-import imgurl3 from './assets/images/bg3.png'
+// import imgurl1 from "./assets/images/bg1.png";
+// import imgurl2 from "./assets/images/bg2.png";
+import imgurl3 from "./assets/images/bg3.png";
 import AuthLayout from "./modules/Shared/components/AuthmoLayout/AuthLayout";
+import ProtectedRoutes from "./modules/Shared/components/ProtectedRoute/ProtectedRoute";
 function App() {
-  const path = window.location.pathname ;
   const routes = createBrowserRouter([
     {
       path: "",
-      element: <AuthLayout imgurl={path == '/login' ? imgurl1 :  imgurl2 }/>,
+      element: (
+          <AuthLayout imgurl={imgurl3} />
+       
+      ),
       errorElement: <NotFound />,
       children: [
         { index: true, element: <Login /> },
-        { path: "login", element: <Login /> },
+        { path: "/login", element: <Login /> },
         { path: "register", element: <Register /> },
         { path: "verify", element: <Verify /> },
         { path: "resetpass", element: <ResetPass /> },
@@ -40,7 +43,11 @@ function App() {
     },
     {
       path: "dashboard",
-      element: <MaterLayout />,
+      element: (
+        <ProtectedRoutes>
+          <MaterLayout  />
+        </ProtectedRoutes>
+      ),
       errorElement: <NotFound />,
       children: [
         { index: true, element: <Dashboard /> },

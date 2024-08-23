@@ -7,9 +7,9 @@ export default function AuthLayout({ imgurl }) {
       style={{ backgroundImage: `url(${imgurl})` }}
     >
       <div className="container-fluid">
-        <div className="row justify-content-center align-items-center vh-100 ">
+        <div className="row justify-content-center align-items-center vh-100">
           <div className="logo">
-            <img src={logo} alt="auth_logo" style={{width:'300px' , color:'#fff'}} />
+            <img src={logo} alt="auth_logo" style={{width:'20wh' , color:'#fff'}} />
           </div>
           <div className="col-lg-5 p-5 cont">
             <Outlet />
