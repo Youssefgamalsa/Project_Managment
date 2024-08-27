@@ -2,12 +2,15 @@ import { Link, useNavigate } from "react-router-dom";
 import "../../../../App.css";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import img from "../../../../assets/1.png";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import baseUsersAuth from "../../../BaseUrls/BaseUrls";
+import { useState } from "react";
 
 export default function Register() {
   let navigate = useNavigate();
+  const [profileImage, setProfileImage] = useState();
 
   let {
     register,
@@ -22,8 +25,11 @@ export default function Register() {
     formdata.append("country", data.country);
     formdata.append("password", data.password);
     formdata.append("confirmPassword", data.confirmPassword);
-    formdata.append("profileImage", data.profileImage[0]);
+    formdata.append("profileImage", profileImage);
     return formdata;
+  };
+  const displaySelectedImage = (e) => {
+    setProfileImage(e.target.value);
   };
   let submtion = async (data) => {
     let form_data = append_to_form_data(data);
@@ -45,6 +51,29 @@ export default function Register() {
       </div>
       <form className="p-1" onSubmit={handleSubmit(submtion)}>
         <div className="p-3 row">
+          <div>
+            <div className="text-center">
+              <div data-mdb-ripple-init>
+                <label
+                  className="form-label text-white m-1"
+                  htmlFor="customFile1"
+                >
+                  <img
+                    id="selectedImage"
+                    src={img}
+                    alt="example placeholder"
+                    style={{ width: "80px" }}
+                  />
+                </label>
+                <input
+                  type="file"
+                  className="form-control d-none"
+                  id="customFile1"
+                  onChange={displaySelectedImage}
+                />
+              </div>
+            </div>
+          </div>
           <div className="my-3 col-md-5">
             <input
               type="text"
@@ -151,13 +180,7 @@ export default function Register() {
             </p>
           )}
         </div>
-        <input
-          type="file"
-          className="col-md-10"
-          {...register("profileImage", {
-            required: "profileImage is required ",
-          })}
-        />
+
         <button type="submit" className="d-block auth_login my-3">
           Register
         </button>
@@ -171,3 +194,14 @@ export default function Register() {
     </>
   );
 }
+
+/* 
+<div className="col-md-8 m-auto my-3">
+<input type="file" className="form-control w-100" {...register("profileImage" ,
+  {
+    required:"profileImage is Required "
+  }
+)}
+ />
+</div>
+*/
