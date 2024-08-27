@@ -10,7 +10,7 @@ export function AuthContextProvider({ children }) {
     const token = localStorage.getItem("token")
     if (token) {
       const decoded = jwtDecode(token)
-      setUser(decoded)
+      setUserData(decoded)
     }
   }, [])
 
