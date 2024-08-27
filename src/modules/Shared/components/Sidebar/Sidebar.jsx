@@ -12,7 +12,7 @@ export default function Sidebarr() {
   }
 
   return (
-    <Sidebar collapsed={menuCollapse} className="pt-5">
+    <Sidebar collapsed={menuCollapse} className="pp">
       <div className="closemenu" onClick={menuIconClick}>
         {menuCollapse ? <FiArrowRightCircle /> : <FiArrowLeftCircle />}
       </div>

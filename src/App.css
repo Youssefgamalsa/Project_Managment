@@ -62,3 +62,20 @@ form input::placeholder {
   color: #ef9b28 !important;
   background-color: unset !important;
 }
+.icon{
+  color: rgba(239, 155, 40, 1);
+  cursor: pointer;
+  font-size: 30px;
+}
+.hover:hover{
+  color: red;
+  transition: .4s;
+}
+.edit{
+  z-index: 55;
+  width: 120%;
+  margin-left: -20.3%;
+}
+.pp{
+  padding-top: 30%;
+}
