@@ -62,20 +62,36 @@ form input::placeholder {
   color: #ef9b28 !important;
   background-color: unset !important;
 }
-.icon{
+.icon {
   color: rgba(239, 155, 40, 1);
   cursor: pointer;
   font-size: 30px;
 }
-.hover:hover{
+.hover:hover {
   color: red;
-  transition: .4s;
+  transition: 0.4s;
 }
-.edit{
+.edit {
   z-index: 55;
   width: 120%;
   margin-left: -20.3%;
 }
-.pp{
+.pp {
   padding-top: 30%;
+}
+.table thead tr th {
+  background-color: #315951e5;
+  color: #fff;
+  border-right: 1px solid #315951a1;
+}
+.btns button {
+  padding: 10px 17px !important;
+}
+.submit {
+  background: #ef9b28;
+  border: none;
+  color: #fff;
+  font-family: "Montserrat";
+  font-size: 16px;
+  font-weight: 400;
 }
