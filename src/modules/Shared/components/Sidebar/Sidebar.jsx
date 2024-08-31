@@ -1,6 +1,6 @@
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar"
 import { NavLink } from "react-router-dom"
-import React, { useState } from "react"
+import { useState } from "react"
 import { FaProjectDiagram, FaTasks, FaUser } from "react-icons/fa"
 import { FiArrowLeftCircle, FiArrowRightCircle } from "react-icons/fi"
 
