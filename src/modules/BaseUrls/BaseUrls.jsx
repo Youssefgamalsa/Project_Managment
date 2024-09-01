@@ -9,6 +9,7 @@ const baseUsersAuth = {
     reset:`${baseUsers}/Reset`,
     verify:`${baseUsers}/verify`,
     changepass:`${baseUsers}/ChangePassword`,
+    GetUsersURL:`${baseUsers}/Manager`
 }
 
 export default baseUsersAuth;
