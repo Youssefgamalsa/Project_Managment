@@ -24,7 +24,6 @@ export default function Login() {
     try {
       let response = await axios.post(baseUsersAuth.login, data);
       toast.success("Login successfully");
-      console.log(response);
       localStorage.setItem("token", response.data.token);
       navigate("/dashboard");
     } catch (error) {
