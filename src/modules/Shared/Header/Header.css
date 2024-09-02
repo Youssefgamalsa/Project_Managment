@@ -1,0 +1,11 @@
+.headerContainer{
+    background-image: url('../../../assets/images/home-bg1.png');
+    background-size: cover;
+    height:313px;
+}
+.task-home{
+    background-color: rgb(101, 42, 165);
+    width: 147px;
+    height: 133px;
+    color: white;
+}
