@@ -1,11 +1,14 @@
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar"
 import { NavLink } from "react-router-dom"
-import { useState } from "react"
-import { FaProjectDiagram, FaTasks, FaUser } from "react-icons/fa"
+import { useContext, useState } from "react"
+import { FaHome, FaProjectDiagram, FaTasks, FaUser } from "react-icons/fa"
 import { FiArrowLeftCircle, FiArrowRightCircle } from "react-icons/fi"
+import { AuthContext } from "../../../../context/AuthContext"
 
 export default function Sidebarr() {
   const [menuCollapse, setMenuCollapse] = useState(false)
+  let { userData } = useContext(AuthContext)
+
 
   const menuIconClick = () => {
     setMenuCollapse(!menuCollapse)
@@ -26,12 +29,25 @@ export default function Sidebarr() {
           },
         }}
       >
+
+
         <MenuItem
+            icon={<FaHome />}
+            component={<NavLink to="/Dashboard" activeClassName="active" />}
+          >
+            Home
+        </MenuItem>
+
+        {userData?.userGroup == 'Manager'?         
+        (<MenuItem
           icon={<FaUser />}
           component={<NavLink to="/Dashboard/Users" activeClassName="active" />}
         >
           Users
-        </MenuItem>
+        </MenuItem>) : ('')}
+
+
+
         <MenuItem
           icon={<FaProjectDiagram />}
           component={
