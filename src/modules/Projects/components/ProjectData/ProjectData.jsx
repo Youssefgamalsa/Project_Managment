@@ -1,24 +1,52 @@
-import axios from "axios";
-import { useForm } from "react-hook-form";
-import { baseurl } from "../../../BaseUrls/BaseUrls";
-import { useNavigate } from "react-router-dom";
+import axios from "axios"
+import { useForm } from "react-hook-form"
+import { baseProjectsUrls } from "../../../BaseUrls/BaseUrls"
+import { useNavigate, useLocation } from "react-router-dom"
+import { toast } from "react-toastify"
+import { useEffect } from "react"
 
 export default function ProjectData() {
-  let navigate = useNavigate();
-  let {
+  const navigate = useNavigate()
+  const { state } = useLocation()
+  const { projectData } = state || {}
+
+  const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
-  } = useForm();
-  let onsubmit = async (data) => {
-    let response = await axios.post(`${baseurl}/Project`, data , {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-    console.log(response);
-    navigate("/dashboard/projects");
-  };
+  } = useForm()
+
+  useEffect(() => {
+    // If projectData exists, populate the form with it
+    if (projectData) {
+      setValue("title", projectData.title)
+      setValue("description", projectData.description)
+    }
+  }, [projectData, setValue])
+
+  const onSubmit = async (data) => {
+    try {
+      const url = projectData
+        ? baseProjectsUrls.updateProjectById(projectData.id)
+        : baseProjectsUrls.createProject
+      const method = projectData ? "put" : "post"
+
+      let response = await axios[method](url, data, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+
+      console.log(response)
+      navigate("/dashboard/projects")
+      toast.success(`Project ${projectData ? "Updated" : "Added"} Successfully`)
+    } catch (error) {
+      console.log(error)
+      toast.error(`Failed to ${projectData ? "update" : "add"} project`)
+    }
+  }
+
   return (
     <>
       <div className="title bg-white p-2 shadow-sm my-2">
@@ -26,23 +54,23 @@ export default function ProjectData() {
           onClick={() => navigate("/dashboard/projects")}
           style={{ cursor: "pointer" }}
         >
-          <i className="fa-solid fa-chevron-left mx-1"></i> view all products{" "}
+          <i className="fa-solid fa-chevron-left mx-1"></i> View All Projects
         </h5>
-        <h2> Add a New Project </h2>
+        <h2>{projectData ? "Edit Project" : "Add a New Project"}</h2>
       </div>
       <form
         className="w-75 m-auto p-5 shadow-lg my-3"
-        onSubmit={handleSubmit(onsubmit)}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <div className="my-2">
           <label htmlFor="title" className="my-1">
-            title
+            Title
           </label>
           <input
-            className="form-control "
-            placeholder="title"
+            className="form-control"
+            placeholder="Title"
             id="title"
-            {...register("title", { required: "title is required " })}
+            {...register("title", { required: "Title is required" })}
           />
           {errors.title && (
             <span className="text-danger">{errors.title.message}</span>
@@ -50,14 +78,14 @@ export default function ProjectData() {
         </div>
         <div className="my-2">
           <label htmlFor="description" className="my-1">
-            description
+            Description
           </label>
           <textarea
             className="form-control"
-            placeholder="description"
+            placeholder="Description"
             id="description"
             {...register("description", {
-              required: "description is required ",
+              required: "Description is required",
             })}
           />
           {errors.description && (
@@ -65,14 +93,18 @@ export default function ProjectData() {
           )}
         </div>
         <div className="btns d-flex justify-content-between align-items-center my-3">
-          <button className="btn btn-outline-secondary rounded-5 d-inline-block" type="button">
+          <button
+            className="btn btn-outline-secondary rounded-5 d-inline-block"
+            type="button"
+            onClick={() => navigate("/dashboard/projects")}
+          >
             Cancel
           </button>
-          <button className="rounded-5 d-inline-block submit" type="submit" >
+          <button className="rounded-5 d-inline-block submit" type="submit">
             Save
           </button>
         </div>
       </form>
     </>
-  );
+  )
 }
