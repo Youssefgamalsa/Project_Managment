@@ -1,7 +1,7 @@
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar"
 import { NavLink, useNavigate } from "react-router-dom"
-import { useState } from "react"
-import {
+import { useContext, useState } from "react"
+import { FaHome,
   FaKey,
   FaProjectDiagram,
   FaSignOutAlt,
@@ -9,11 +9,14 @@ import {
   FaUser,
 } from "react-icons/fa"
 import { FiArrowLeftCircle, FiArrowRightCircle } from "react-icons/fi"
+import { AuthContext } from "../../../../context/AuthContext"
 import styles from "./Sidebar.module.css"
 
 export default function Sidebarr() {
-  const [menuCollapse, setMenuCollapse] = useState(false)
   const navigate = useNavigate()
+  const [menuCollapse, setMenuCollapse] = useState(false)
+  let { userData } = useContext(AuthContext)
+
   const menuIconClick = () => {
     setMenuCollapse(!menuCollapse)
   }
@@ -39,12 +42,28 @@ export default function Sidebarr() {
           },
         }}
       >
+
+
         <MenuItem
-          icon={<FaUser />}
-          component={<NavLink to="/Dashboard/Users" activeClassName="active" />}
+          icon={<FaHome />}
+          component={<NavLink to="/Dashboard" activeClassName="active" />}
         >
-          Users
+          Home
         </MenuItem>
+
+        {userData?.userGroup == "Manager" ? (
+          <MenuItem
+            icon={<FaUser />}
+            component={
+              <NavLink to="/Dashboard/Users" activeClassName="active" />
+            }
+          >
+            Users
+          </MenuItem>
+        ) : (
+          ""
+        )}
+
         <MenuItem
           icon={<FaProjectDiagram />}
           component={
