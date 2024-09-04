@@ -1,9 +1,12 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { baseurl } from "../../../BaseUrls/BaseUrls";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../../../context/AuthContext";
 
 export default function ProjectList() {
+  let { userData } = useContext(AuthContext)
+
   const [projectList, setProjectList] = useState([]);
   let navigate = useNavigate();
   let getProducts = async () => {
@@ -14,16 +17,43 @@ export default function ProjectList() {
         },
       });
       setProjectList(response.data.data);
-      // console.log(response.data.data);
     } catch (error) {
-      // console.log(error);
     }
   };
+
+
+  let getProductsEmploye = async () => {
+    try {
+      let response = await axios.get(`${baseurl}/Project/employee`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setProjectList(response.data.data);
+      console.log(response);
+    
+    } 
+    catch (error) {
+      console.log(error);
+      
+    }
+  };
+
+
   useEffect(() => {
-    getProducts();
+{  userData?.userGroup == 'Manager'? (getProducts()):
+  (getProductsEmploye())
+  }
   }, []);
   return (
     <>
+
+
+
+
+      {userData?.userGroup == 'Manager'?  (    
+        <div>
+      
       <div className="title d-flex justify-content-between align-items-center p-4 bg-white shadow-sm mb-3">
         <h3> Projects </h3>
         <button
@@ -33,7 +63,8 @@ export default function ProjectList() {
         >
         <i className="fa-solid fa-plus mx-2"></i> Add New Project </button>
       </div>
-      <table className="table">
+
+              <table className="table">
         <thead>
           <tr>
             <th scope="col" >Title</th>
@@ -56,9 +87,45 @@ export default function ProjectList() {
                   </td>
                 </tr>
               ))
-            : ""}
+            : "No Data"}
         </tbody>
       </table>
+    </div>)
+      :
+      (<div>
+      
+      <div className="title d-flex justify-content-between align-items-center p-4 bg-white shadow-sm mb-3">
+        <h3> Projects </h3>
+      </div>
+
+              <table className="table">
+        <thead>
+          <tr>
+            <th scope="col" >ID</th>
+            <th scope="col">Title </th>
+            <th scope="col">Description </th>
+            <th scope="col">Tasks </th>
+            <th scope="col">creation Date </th>
+
+          </tr>
+        </thead>
+        <tbody>
+          {projectList.length > 0
+            ? projectList.map((project) => (
+                <tr key={project.id}>
+                  <td>{project?.id}</td>
+                  <td> {project.title} </td>
+                  <td> {project.description} </td>
+                  <td>{project?.task.length}</td>
+                  <td>{project?.creationDate}</td>
+                </tr>
+              ))
+            : "No data"}
+        </tbody>
+      </table>
+    </div>)
+            }
+
     </>
   );
 }
