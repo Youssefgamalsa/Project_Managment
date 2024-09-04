@@ -1,24 +1,30 @@
-import axios from "axios";
-import { useForm } from "react-hook-form";
-import { baseurl } from "../../../BaseUrls/BaseUrls";
-import { useNavigate } from "react-router-dom";
+import axios from "axios"
+import { useForm } from "react-hook-form"
+import { baseProjectsUrls, baseurl } from "../../../BaseUrls/BaseUrls"
+import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 
 export default function ProjectData() {
-  let navigate = useNavigate();
+  let navigate = useNavigate()
   let {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm()
   let onsubmit = async (data) => {
-    let response = await axios.post(`${baseurl}/Project`, data , {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-    console.log(response);
-    navigate("/dashboard/projects");
-  };
+    try {
+      let response = await axios.post(baseProjectsUrls.createProject, data, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      console.log(response)
+      toast.success("Project Added Successfully")
+      navigate("/dashboard/projects")
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <>
       <div className="title bg-white p-2 shadow-sm my-2">
@@ -26,7 +32,7 @@ export default function ProjectData() {
           onClick={() => navigate("/dashboard/projects")}
           style={{ cursor: "pointer" }}
         >
-          <i className="fa-solid fa-chevron-left mx-1"></i> view all products{" "}
+          <i className="fa-solid fa-chevron-left mx-1"></i> View all projects
         </h5>
         <h2> Add a New Project </h2>
       </div>
@@ -36,7 +42,7 @@ export default function ProjectData() {
       >
         <div className="my-2">
           <label htmlFor="title" className="my-1">
-            title
+            Title
           </label>
           <input
             className="form-control "
@@ -50,7 +56,7 @@ export default function ProjectData() {
         </div>
         <div className="my-2">
           <label htmlFor="description" className="my-1">
-            description
+            Description
           </label>
           <textarea
             className="form-control"
@@ -65,14 +71,17 @@ export default function ProjectData() {
           )}
         </div>
         <div className="btns d-flex justify-content-between align-items-center my-3">
-          <button className="btn btn-outline-secondary rounded-5 d-inline-block" type="button">
+          <button
+            className="btn btn-outline-secondary rounded-5 d-inline-block"
+            type="button"
+          >
             Cancel
           </button>
-          <button className="rounded-5 d-inline-block submit" type="submit" >
+          <button className="rounded-5 d-inline-block submit" type="submit">
             Save
           </button>
         </div>
       </form>
     </>
-  );
+  )
 }

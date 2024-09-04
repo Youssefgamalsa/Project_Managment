@@ -73,7 +73,7 @@ export default function UsersLists() {
       <table className="table">
         <thead>
           <tr>
-            <th scope="col">UserName</th>
+            <th scope="col">User Name</th>
             <th scope="col">Status</th>
             <th scope="col">Phone</th>
             <th scope="col">Email</th>

@@ -95,7 +95,9 @@ form input::placeholder {
   font-size: 16px;
   font-weight: 400;
 }
-
+.cursor-pointer {
+  cursor: pointer;
+}
 
 .btn-77,
 .btn-77 *,
@@ -107,14 +109,11 @@ form input::placeholder {
   box-sizing: border-box;
 }
 .btn-77 {
-  -webkit-tap-highlight-color: 
-transparent;
+  -webkit-tap-highlight-color: transparent;
   -webkit-appearance: button;
-  background-color: 
-#148742;
+  background-color: #148742;
   background-image: none;
-  color: 
-#fff;
+  color: #fff;
   cursor: pointer;
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
@@ -143,8 +142,7 @@ transparent;
   animation: pulse 2s infinite;
   border: 1px solid;
   border-radius: 999px;
-  box-shadow: 0 0 0 2em 
-transparent;
+  box-shadow: 0 0 0 2em transparent;
   box-sizing: border-box;
   display: block;
   font-weight: 900;
@@ -156,14 +154,12 @@ transparent;
 }
 @-webkit-keyframes pulse {
   0% {
-    box-shadow: 0 0 0 0 
-#ffffff;
+    box-shadow: 0 0 0 0 #ffffff;
   }
 }
 @keyframes pulse {
   0% {
-    box-shadow: 0 0 0 0 
-#0d5a03;
+    box-shadow: 0 0 0 0 #0d5a03;
   }
 }
 
@@ -175,14 +171,11 @@ transparent;
   -webkit-appearance: none;
   width: var(--size);
   height: calc(var(--size) / 2);
-  background-color: 
-#d7380d;
-  border: 3px solid 
-#222;
+  background-color: #d7380d;
+  border: 3px solid #222;
   border-radius: 30px 100px 100px 100px;
-  box-shadow: 0 10px 20px 
-rgba(0,0,0,0.2);
-  outline: none;  
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  outline: none;
   cursor: pointer;
   position: relative;
   transition: all 0.5s;
@@ -196,29 +189,23 @@ rgba(0,0,0,0.2);
   left: 0;
   top: 50%;
   transform: translateY(-50%) scale(0.7);
-  border: 3px solid 
-#222;
+  border: 3px solid #222;
   border-radius: 30px 100px 100px 100px;
-  background-color: 
-#fff;
+  background-color: #fff;
   box-sizing: border-box;
   transition: all 0.5s;
 }
 
 .wrap-check-19 input[type="checkbox"]:checked {
-  background-color: 
-  #15f74aaa;
+  background-color: #15f74aaa;
   border-radius: 100px 100px 30px 100px;
-  
 }
 
 .wrap-check-19 input[type="checkbox"]:checked::before {
   left: 50%;
-  background-color: 
-#ffffffd4;
+  background-color: #ffffffd4;
   border-radius: 100px 100px 30px 100px;
 }
-
 
 .wrap-input-6 .input {
   width: 100%;
@@ -226,13 +213,10 @@ rgba(0,0,0,0.2);
   letter-spacing: 1px;
   border: 0;
   padding: 5px 0 7px;
-  border: 1px solid 
-transparent;
-  border-bottom-color: 
-#ccc;
+  border: 1px solid transparent;
+  border-bottom-color: #ccc;
   transition: 0.4s;
-  background-color: 
-#f5f6fd;
+  background-color: #f5f6fd;
   height: 36px;
 }
 
@@ -260,6 +244,5 @@ transparent;
 .wrap-input-6 .input:focus ~ .focus-border {
   width: 100%;
   transition: 0.4s;
-  border: 2px solid 
-#6c5dd3;
+  border: 2px solid #6c5dd3;
 }
