@@ -4,6 +4,7 @@ import { useContext, useState } from "react"
 import { FaHome, FaProjectDiagram, FaTasks, FaUser } from "react-icons/fa"
 import { FiArrowLeftCircle, FiArrowRightCircle } from "react-icons/fi"
 import { AuthContext } from "../../../../context/AuthContext"
+import styles from "./Sidebar.module.css"
 
 export default function Sidebarr() {
   const [menuCollapse, setMenuCollapse] = useState(false)
@@ -16,8 +17,14 @@ export default function Sidebarr() {
 
   return (
     <Sidebar collapsed={menuCollapse} className="pp">
-      <div className="closemenu" onClick={menuIconClick}>
-        {menuCollapse ? <FiArrowRightCircle /> : <FiArrowLeftCircle />}
+      <div className={styles.closewrapper}>
+        <div className={styles.closemenu} onClick={menuIconClick}>
+          {menuCollapse ? (
+            <FiArrowRightCircle className="text-white cursor-pointer" />
+          ) : (
+            <FiArrowLeftCircle className="text-white cursor-pointer" />
+          )}
+        </div>
       </div>
 
       <Menu
@@ -29,24 +36,25 @@ export default function Sidebarr() {
           },
         }}
       >
-
-
         <MenuItem
-            icon={<FaHome />}
-            component={<NavLink to="/Dashboard" activeClassName="active" />}
-          >
-            Home
+          icon={<FaHome />}
+          component={<NavLink to="/Dashboard" activeClassName="active" />}
+        >
+          Home
         </MenuItem>
 
-        {userData?.userGroup == 'Manager'?         
-        (<MenuItem
-          icon={<FaUser />}
-          component={<NavLink to="/Dashboard/Users" activeClassName="active" />}
-        >
-          Users
-        </MenuItem>) : ('')}
-
-
+        {userData?.userGroup == "Manager" ? (
+          <MenuItem
+            icon={<FaUser />}
+            component={
+              <NavLink to="/Dashboard/Users" activeClassName="active" />
+            }
+          >
+            Users
+          </MenuItem>
+        ) : (
+          ""
+        )}
 
         <MenuItem
           icon={<FaProjectDiagram />}
@@ -62,7 +70,6 @@ export default function Sidebarr() {
         >
           Tasks
         </MenuItem>
-    
       </Menu>
     </Sidebar>
   )
