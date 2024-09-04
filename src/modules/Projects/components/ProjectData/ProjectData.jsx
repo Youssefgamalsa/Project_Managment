@@ -2,6 +2,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { baseurl } from "../../../BaseUrls/BaseUrls";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function ProjectData() {
   let navigate = useNavigate();
@@ -10,15 +11,19 @@ export default function ProjectData() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   let onsubmit = async (data) => {
-    let response = await axios.post(`${baseurl}/Project`, data , {
+    let response = await axios.post(`${baseurl}/Project`, data, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
     console.log(response);
     navigate("/dashboard/projects");
+    toast.success("Project created successfully ");
   };
+  
+
   return (
     <>
       <div className="title bg-white p-2 shadow-sm my-2">
@@ -65,10 +70,13 @@ export default function ProjectData() {
           )}
         </div>
         <div className="btns d-flex justify-content-between align-items-center my-3">
-          <button className="btn btn-outline-secondary rounded-5 d-inline-block" type="button">
+          <button
+            className="btn btn-outline-secondary rounded-5 d-inline-block"
+            type="button"
+          >
             Cancel
           </button>
-          <button className="rounded-5 d-inline-block submit" type="submit" >
+          <button className="rounded-5 d-inline-block submit" type="submit">
             Save
           </button>
         </div>

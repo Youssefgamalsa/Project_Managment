@@ -263,3 +263,15 @@ transparent;
   border: 2px solid 
 #6c5dd3;
 }
+.done{
+  background-color: #148742;
+  color: #fff;
+  padding:10px ; 
+  border-radius: 50%;
+}
+.ToDo{
+  background-color: #6c5dd3;
+  padding:8px;
+  border-radius: 50%;
+  color: #fff;
+}
