@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import { createHashRouter, RouterProvider } from "react-router-dom"
 import "./App.css"
 import Login from "./modules/Authentication/components/Login/Login"
 import Register from "./modules/Authentication/components/Register/Register"
@@ -22,7 +22,7 @@ import imgurl3 from "./assets/images/bg3.png"
 import AuthLayout from "./modules/Shared/components/AuthmoLayout/AuthLayout"
 import ProtectedRoutes from "./modules/Shared/components/ProtectedRoute/ProtectedRoute"
 function App() {
-  const routes = createBrowserRouter([
+  const routes = createHashRouter([
     {
       path: "",
       element: <AuthLayout imgurl={imgurl3} />,
