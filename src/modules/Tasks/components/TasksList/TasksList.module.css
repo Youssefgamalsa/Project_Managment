@@ -1,0 +1,28 @@
+.light {
+  --bg-color: #f5f5f5;
+  --text-color: #000000;
+}
+.dark {
+  --bg-color: #315951;
+  --text-color: #ffffff;
+}
+.wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 2rem;
+  h2 {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    padding-inline: 2.5rem;
+    padding-block: 1.5rem;
+    border-radius: 1rem;
+  }
+}
+
+.tasksBoard {
+  padding-inline-start: 1rem;
+  flex-grow: 1;
+  display: flex;
+  gap: 0.5rem;
+}

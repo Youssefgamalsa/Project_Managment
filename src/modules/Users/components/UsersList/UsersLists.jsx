@@ -1,36 +1,45 @@
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import baseUsersAuth from "../../../BaseUrls/BaseUrls";
+import React, { useEffect, useState } from "react"
+import axios from "axios"
+import { useNavigate } from "react-router-dom"
+import { Table, Button, Form, InputGroup, Pagination } from "react-bootstrap"
+import baseUsersAuth from "../../../BaseUrls/BaseUrls"
 
 export default function UsersLists() {
-  const [UsersList, setUsersList] = useState([]);
-  const [nameValue, setNameValue] = useState("");
+  const [usersList, setUsersList] = useState([])
+  const [nameValue, setNameValue] = useState("")
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState(4)
+  const [totalPages, setTotalPages] = useState(0)
 
-  let navigate = useNavigate();
+  let navigate = useNavigate()
 
-  let getUsers = async ( pageNo = 1, pageSize = 2, nameInput = "" ) => {
+  const getUsers = async (
+    pageNo = currentPage,
+    pageSizeParam = pageSize,
+    nameInput = nameValue
+  ) => {
     try {
       let response = await axios.get(baseUsersAuth.GetUsersURL, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        params:{
-          pageNumber: pageNo, 
-          pageSize: pageSize, 
-          userName: nameInput}
-      });
-      setUsersList(response.data.data);
-      console.log(response);
+        params: {
+          pageNumber: pageNo,
+          pageSize: pageSizeParam,
+          userName: nameInput,
+        },
+      })
+      setUsersList(response.data.data)
+      setTotalPages(response.data.totalNumberOfPages)
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
-  let ToggleUsersStautes = async (id, isActivated ) => {
+  const toggleUserStatus = async (id, isActivated) => {
     try {
-      let response = await axios.put(
-        `https://upskilling-egypt.com:3003/api/v1/Users/${id}`,
+      await axios.put(
+        baseUsersAuth.toggleActivatedEmployee(id),
         {
           isActivated: !isActivated,
         },
@@ -39,79 +48,114 @@ export default function UsersLists() {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
-      );
-      console.log(response);
+      )
 
       setUsersList((prevUsersList) =>
         prevUsersList.map((user) =>
           user.id === id ? { ...user, isActivated: !isActivated } : user
         )
-      );
+      )
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
-  const getNameValue = (input) => {
-    setNameValue(input.target.value);
-    getUsers(1, 2, input.target.value);
-  };
+  const handleSearch = (e) => {
+    const searchValue = e.target.value
+    setNameValue(searchValue)
+    setCurrentPage(1)
+    getUsers(1, pageSize, searchValue)
+  }
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber)
+    getUsers(pageNumber, pageSize, nameValue)
+  }
 
   useEffect(() => {
-    getUsers(1,4);
-  }, []);
+    getUsers()
+  }, [])
 
   return (
-    <>
-      <h2 className="mx-2 my-4 text-black-50"> Users </h2>
+    <div className="m-4">
+      <h2 className="mx-2 my-4 text-black-50">Users</h2>
 
-        <div class="wrap-input-6 w-25">
-          <input role="search" onChange={getNameValue} className="input" type="text" placeholder=" Search By Name"/>
-          <span class="focus-border"></span>
-        </div>
+      <InputGroup className="mb-3">
+        <Form.Control
+          placeholder="Search by name"
+          value={nameValue}
+          onChange={handleSearch}
+        />
+      </InputGroup>
 
-      <table className="table">
+      <Table striped bordered hover>
         <thead>
           <tr>
-            <th scope="col">UserName</th>
-            <th scope="col">Status</th>
-            <th scope="col">Phone</th>
-            <th scope="col">Email</th>
-            <th scope="col">Country</th>
-            <th scope="col">Actions</th>
+            <th>UserName</th>
+            <th>Status</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Country</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {UsersList.length > 0
-            ? UsersList.map((Users) => (
-                <tr key={Users.id}>
-                  <td>{Users.userName}</td>
-                  <td>
-                    {Users.isActivated ? (
-                      <button className="btn-77 my-3">Active</button>
-                    ) : (
-                      <button className="btn btn-danger my-4 w-50">Not Active</button>
-                    )}
-                  </td>
-                  <td>{Users.phoneNumber}</td>
-                  <td>{Users.email}</td>
-                  <td>{Users.country}</td>
-                  <td>
-                    <div className="wrap-check-19">
-                      <input
-                        type="checkbox"
-                        checked={Users.isActivated}
-                        onChange={() =>
-                          ToggleUsersStautes(Users.id, Users.isActivated)
-                        }
-                      />
-                    </div>
-                  </td>
-                </tr>
-              ))
-            : ""}
+          {usersList.map((user) => (
+            <tr key={user.id}>
+              <td>{user.userName}</td>
+              <td>
+                {user.isActivated ? (
+                  <Button variant="success" size="sm">
+                    Active
+                  </Button>
+                ) : (
+                  <Button variant="danger" size="sm">
+                    Not Active
+                  </Button>
+                )}
+              </td>
+              <td>{user.phoneNumber}</td>
+              <td>{user.email}</td>
+              <td>{user.country}</td>
+              <td>
+                <Form.Check
+                  type="switch"
+                  checked={user.isActivated}
+                  onChange={() => toggleUserStatus(user.id, user.isActivated)}
+                />
+              </td>
+            </tr>
+          ))}
         </tbody>
-      </table>
-    </>
-  );
+      </Table>
+
+      <Pagination>
+        <Pagination.First
+          onClick={() => handlePageChange(1)}
+          disabled={currentPage === 1}
+        />
+        <Pagination.Prev
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+        />
+        {[...Array(totalPages)].map((_, index) => (
+          <Pagination.Item
+            key={index + 1}
+            active={index + 1 === currentPage}
+            onClick={() => handlePageChange(index + 1)}
+          >
+            {index + 1}
+          </Pagination.Item>
+        ))}
+        <Pagination.Next
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        />
+        <Pagination.Last
+          onClick={() => handlePageChange(totalPages)}
+          disabled={currentPage === totalPages}
+        />
+      </Pagination>
+    </div>
+  )
 }
