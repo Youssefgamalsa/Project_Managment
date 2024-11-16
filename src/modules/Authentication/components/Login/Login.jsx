@@ -80,10 +80,10 @@ export default function Login() {
           <p className="text-danger text-left">{errors.password.message}</p>
         )}
         <div className="links d-flex justify-content-between align-items-center my-5">
-          <Link to="/register" className="white">
+          <Link to="/register" className="text-white">
             Register Now ?
           </Link>
-          <Link to="/forgetpass" className="white">
+          <Link to="/forgetpass" className="text-white">
             Forget password ?
           </Link>
         </div>
