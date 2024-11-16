@@ -33,7 +33,7 @@ export default function Login() {
   return (
     <>
       <div className="my-3">
-        <span className="white my-3">Welocome to PMS</span>
+        <span className="my-3" style={{color:'#fff' , fonrSize:'20px '}}>Welocome to PMS</span>
         <h2 style={{ color: "#EF9B28" }}> Login </h2>
       </div>
       <form className="p-1" onSubmit={handleSubmit(submtion)}>

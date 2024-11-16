@@ -14,10 +14,7 @@ export default function Verify() {
   } = useForm();
   let submtion = async (data) => {
     try {
-      let response = await axios.put(
-       baseUsersAuth.verify,
-        data
-      );
+      let response = await axios.put(baseUsersAuth.verify, data);
       toast.success(response.data.message);
       console.log(response);
       navigate("/login");
@@ -28,7 +25,9 @@ export default function Verify() {
   return (
     <>
       <div className="my-3">
-        <span className="white my-3">Welocome to PMS</span>
+        <span className="my-3" style={{ color: "#fff", fonrSize: "20px " }}>
+          Welocome to PMS
+        </span>
         <h2 style={{ color: "#EF9B28" }}> Verify Account </h2>
       </div>
       <form className="p-1" onSubmit={handleSubmit(submtion)}>

@@ -20,17 +20,18 @@
 }
 
 form input {
-  border: none;
-  border-bottom: 1px solid var(--bg-color);
+  /* border: 1px solid #fff; */
+  border: 0.25px solid #ffffff61;
   outline: none;
   width: 100%;
   background: transparent;
+  padding: 3px;
 }
 
-form input::placeholder {
-  color: var(--text-color);
+/* form input::placeholder { */
+/* color: var(--text-color);
   margin-bottom: 6px;
-}
+} */
 .auth_login {
   background-color: #ef9b28;
   color: var(--text-color);
@@ -278,9 +279,13 @@ form input::placeholder {
 .draggable {
   cursor: grab;
   user-select: none;
-  transition: box-shadow 0.3s cubic-bezier(.25,.8,.25,1);
+  transition: box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .draggable:active {
   cursor: grabbing;
+}
+form div input::placeholder {
+  color: #fff;
+  margin-bottom: 6px;
 }
